@@ -20,7 +20,7 @@ namespace Internship_3_OOP
 
         static void Main(string[] args)
         {
-            //InitalizedData();
+            //InitalizeData();
 
             MainMenu = new Dictionary<string, Action>
             {
@@ -46,13 +46,8 @@ namespace Internship_3_OOP
 
                 string choice = Console.ReadLine();
                 if (MainMenu.ContainsKey(choice))
-                {
                     MainMenu[choice].Invoke();
-                }
-                else
-                {
-                    Console.WriteLine("Nevazeca opcija. Pokusajte ponovno:");
-                }
+                else Console.WriteLine("Nevazeca opcija. Pokusajte ponovno:");
             }
 
         }//Main
@@ -71,9 +66,7 @@ namespace Internship_3_OOP
             {
                 Console.WriteLine($"Projekt: {project.Key.Name} - Status: {project.Key.Status}");
                 foreach (var task in project.Value)
-                {
                     Console.WriteLine("$\"\\tZadatak: {task.Name} - Status: {task.Status} - Rok: {task.DueDate.ToShortDateString()}\"");
-                }
             }
         }
 
@@ -109,7 +102,6 @@ namespace Internship_3_OOP
                         description = Console.ReadLine();
                         if (!string.IsNullOrWhiteSpace(description))
                             break;
-
                         Console.WriteLine("Opis projekta ne moze biti prazan. Pokusajte ponovno:");
                     }
 
@@ -119,7 +111,6 @@ namespace Internship_3_OOP
                     {
                         if (DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate))
                             break;
-
                         Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd:");
                     }
 
@@ -131,13 +122,9 @@ namespace Internship_3_OOP
                         {
                             if (startDate < endDate)
                                 break;
-
                             Console.WriteLine("Datum pocetka mora biti prije datuma zavrsetka. Unesite ponovo datum zavrsetka:");
                         }
-                        else
-                        {
-                            Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd:");
-                        }
+                        else Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd:");
                     }
 
                     Console.WriteLine("Unesite status projekta (Active, Pending, Completed):");
@@ -146,10 +133,8 @@ namespace Internship_3_OOP
                     {
                         if (Enum.ProjectStatus.TryParse(Console.ReadLine(), true, out status))
                             break;
-
                         Console.WriteLine("Nevazeci status. Unesite Active, Pending ili Completed:");
                     }
-
 
                     var newProject = new Project(name, description, startDate, endDate, status);
                     projects.Add(newProject, new List<Task>());
@@ -176,13 +161,11 @@ namespace Internship_3_OOP
             Console.Clear();
             Console.WriteLine("Trenutni projekti:");
             foreach (var project in projects)
-            {
                 Console.WriteLine($"Projekt: {project.Key.Name} - Status: {project.Key.Status}");
-            }
+
             Console.WriteLine("Unesite ime projekta kojeg zelite izbrisati:");
             string projectName = Console.ReadLine();
             var projectToDelete = projects.Keys.FirstOrDefault(p => p.Name.Equals(projectName, StringComparison.OrdinalIgnoreCase));
-
             if (projectToDelete != null)
             {
                 Console.WriteLine("Jeste li sigurni? (y/n):");
@@ -192,15 +175,9 @@ namespace Internship_3_OOP
                     projects.Remove(projectToDelete);
                     Console.WriteLine("Projekt izbrisan uspjesno.");
                 }
-                else
-                {
-                    Console.WriteLine("Neuspjesno.");
-                }
+                else Console.WriteLine("Brisanje projekta otkazano.");
             }
-            else
-            {
-                Console.WriteLine("Projekt nije pronaden.");
-            }
+            else Console.WriteLine("Projekt nije pronaden.");
             Console.Clear();
         }
 
@@ -241,20 +218,12 @@ namespace Internship_3_OOP
                     {
                         Console.WriteLine($"Projekt: {project.Key.Name} - Status: {project.Key.Status}");
                         foreach (var task in project.Value)
-                        {
                             Console.WriteLine($"\tZadatak: {task.Name} - Status: {task.Status} - Rok: {task.DueDate.ToShortDateString()}");
-                        }
                     }
                 }
-                else
-                {
-                    Console.WriteLine("Nema projekata s odabranim statusom.");
-                }
+                else Console.WriteLine("Nema projekata s odabranim statusom.");
             }
-            else
-            {
-                Console.WriteLine("Nevazeci status. Odaberite jedan od sljedecih: Active, Pending, Completed.");
-            }
+            else Console.WriteLine("Nevazeci status. Odaberite jedan od sljedecih: Active, Pending, Completed.");
         }
 
         static void ManageProject()
@@ -264,44 +233,46 @@ namespace Internship_3_OOP
             Console.WriteLine("Trenutni projekti:");
             int index = 1;
             foreach (var project in projects)
-            {
                 Console.WriteLine($"{index++}. {project.Key.Name} - Status: {project.Key.Status}");
-            }
+
             Console.WriteLine("\nOdaberite broj projekta za upravljanje:");
             int projectIndex;
             while (!int.TryParse(Console.ReadLine(), out projectIndex) || projectIndex < 1 || projectIndex > projects.Count)
-            {
                 Console.WriteLine("Neispravan odabir. Pokusajte ponovno.");
-            }
-            var selectedProject = projects.Keys.ElementAt(projectIndex - 1);
 
+            var selectedProject = projects.Keys.ElementAt(projectIndex - 1);
             ProjectMenu = new Dictionary<string, Action>
             {
                 { "1", () => ViewTasks(selectedProject) },
-                { "2", () => ViewProjectDetails(selectedProject) },
-                { "3", () => EditProjectStatus(selectedProject) },
-                { "4", () => AddTaskToProject(selectedProject) },
-                { "5", () => RemoveTaskFromProject(selectedProject) },
-                { "6", () => CalculateTotalTimeForActiveTasks(selectedProject) },
-                { "7", () => ManageTask(selectedProject) }
+                { "2", () => ViewTasksSortedByDuration(selectedProject) },
+                { "3", () => ViewProjectDetails(selectedProject) },
+                { "4", () => EditProjectStatus(selectedProject) },
+                { "5", () => AddTaskToProject(selectedProject) },
+                { "6", () => RemoveTaskFromProject(selectedProject) },
+                { "7", () => CalculateTotalTimeForActiveTasks(selectedProject) },
+                { "8", () => ManageTask(selectedProject) }
             };
 
             while (true)
             {
                 Console.WriteLine($"\n--- IZBORNIK ZA UPRAVLJANJE PROJEKTOM {selectedProject.Name} ---");
                 Console.WriteLine("1 - Ispis svih zadataka unutar odabranog projekta");
-                Console.WriteLine("2 - Prikaz detalja odabranog projekta");
-                Console.WriteLine("3 - Uredivanje statusa projekta");
-                Console.WriteLine("4 - Dodavanje zadatka unutar projekta");
-                Console.WriteLine("5 - Brisanje zadatka iz projekta");
-                Console.WriteLine("6 - Prikaz ukupno ocekivanog vremena za sve aktivne zadatke u projektu");
-                Console.WriteLine("7 - Upravljanje pojedinim zadatkom");
-                Console.WriteLine("8 - Povratak na glavni izbornik");
+                Console.WriteLine("2 - Ispis zadataka sortiranih po duljini trajanja");
+                Console.WriteLine("3 - Prikaz detalja odabranog projekta");
+                Console.WriteLine("4 - Uredivanje statusa projekta");
+                Console.WriteLine("5 - Dodavanje zadatka unutar projekta");
+                Console.WriteLine("6 - Brisanje zadatka iz projekta");
+                Console.WriteLine("7 - Prikaz ukupno ocekivanog vremena za sve aktivne zadatke u projektu");
+                Console.WriteLine("8 - Upravljanje pojedinim zadatkom");
+                Console.WriteLine("9 - Povratak na glavni izbornik");
                 Console.WriteLine("\nOdaberite opciju:");
-                string choice = Console.ReadLine();
 
-                if (choice == "8")
+                string choice = Console.ReadLine();
+                if (choice == "9")
+                {
+                    Console.Clear();
                     break;
+                }
                 else if (ProjectMenu.ContainsKey(choice))
                     ProjectMenu[choice].Invoke();
                 else
@@ -316,12 +287,28 @@ namespace Internship_3_OOP
             if (!projects[project].Any())
             {
                 Console.WriteLine("Nema zadataka za ovaj projekt.");
+                return;
             }
             else
             {
                 foreach (var task in projects[project])
                     Console.WriteLine($"Task: {task.Name} - Status: {task.Status} - Due: {task.DueDate.ToShortDateString()}");
             }
+        }
+
+        static void ViewTasksSortedByDuration(Project project)
+        {
+            Console.Clear();
+            Console.WriteLine($"\n--- ZADACI SORTIRANI OD NAJKRAĆEG DO NAJDULJEG ZA PROJEKT: {project.Name} ---");
+            if (projects[project].Count == 0)
+            {
+                Console.WriteLine($"Nema zadataka za ovaj projekt.");
+                return;
+            }
+
+            var sortedTasks = projects[project].OrderBy(t => t.ExpectedDuration).ToList();
+            foreach (var task in sortedTasks)
+                Console.WriteLine($"Zadatak: {task.Name} - Trajanje: {task.ExpectedDuration} dan(a) - Rok: {task.DueDate.ToShortDateString()}");
         }
 
         static void ViewProjectDetails(Project project)
@@ -346,6 +333,7 @@ namespace Internship_3_OOP
                 Console.WriteLine("Promjena zavrsenog projekta nije moguca.");
                 return;
             }
+
             Console.WriteLine("Unesite novi status projekta (Active, Pending, Completed):");
             string statusInput = Console.ReadLine();
             if (Enum.ProjectStatus.TryParse(statusInput, true, out ProjectStatus newStatus))
@@ -388,7 +376,6 @@ namespace Internship_3_OOP
                         description = Console.ReadLine();
                         if (!string.IsNullOrWhiteSpace(description))
                             break;
-
                         Console.WriteLine("Opis zadatka ne moze biti prazan. Pokusajte ponovno:");
                     }
 
@@ -435,13 +422,19 @@ namespace Internship_3_OOP
         {
             Console.Clear();
             Console.WriteLine("\nUnesite ime zadatka kojeg zelite izbrisati:");
+
             string taskName = Console.ReadLine();
             var taskToRemove = projects[project].FirstOrDefault(t => t.Name.Equals(taskName, StringComparison.OrdinalIgnoreCase));
-
             if (taskToRemove != null)
             {
-                projects[project].Remove(taskToRemove);
-                Console.WriteLine($"Zadatak '{taskName}' uspjesno uklonjen iz projekta '{project.Name}'.");
+                Console.WriteLine($"Jeste li sigurni? (y/n)");
+                string confirm = Console.ReadLine();
+                if (confirm.ToLower() == "y")
+                {
+                    projects[project].Remove(taskToRemove);
+                    Console.WriteLine($"Zadatak '{taskName}' uspjesno uklonjen iz projekta '{project.Name}'.");
+                }
+                else Console.WriteLine("Brisanje zadatka otkazano.");
             }
             else Console.WriteLine("Zadatak nije pronaden.");
         }
@@ -453,9 +446,7 @@ namespace Internship_3_OOP
             foreach (var task in projects[project])
             {
                 if (task.Status == TaskStatus.Active || task.Status == TaskStatus.Delayed)
-                {
                     totalTime += task.DueDate - DateTime.Today;
-                }
             }
             Console.WriteLine($"\nUkupno ocekivano vrijeme za sve aktivne zadatke u projektu '{project.Name}': {totalTime.Days} dana.");
         }
@@ -472,16 +463,13 @@ namespace Internship_3_OOP
             }
             Console.WriteLine("Odaberite broj zadatka kojim zelite upravljati:");
             for (int i = 0; i < taskList.Count; i++)
-            {
                 Console.WriteLine($"{i + 1} - {taskList[i].Name}");
-            }
+
             int selectedTaskIndex;
             while (!int.TryParse(Console.ReadLine(), out selectedTaskIndex) || selectedTaskIndex < 1 || selectedTaskIndex > taskList.Count)
-            {
                 Console.WriteLine("Nevazeci odabir. Pokusajte ponovno:");
-            }
-            Task selectedTask = taskList[selectedTaskIndex - 1];
 
+            Task selectedTask = taskList[selectedTaskIndex - 1];
             TaskMenu = new Dictionary<string, Action>
             {
                 { "1", () => ViewTaskDetails(selectedTask) },
@@ -497,7 +485,10 @@ namespace Internship_3_OOP
                 string choice = Console.ReadLine();
 
                 if (choice == "3")
+                {
+                    Console.Clear();
                     break;
+                }
                 else if (TaskMenu.ContainsKey(choice))
                     TaskMenu[choice].Invoke();
                 else Console.WriteLine("Nevazeca opcija. Pokusajte ponovno.");
@@ -543,6 +534,7 @@ namespace Internship_3_OOP
         }
 
         //u nastavku dodati inicijalne podatke...
+
 
 
     }//class Program
