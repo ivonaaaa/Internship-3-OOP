@@ -394,7 +394,73 @@ namespace Internship_3_OOP
 
         static void ManageTask(Project project)
         {
-            //
+            Console.WriteLine($"\n--- UPRAVLJANJE ZADACIMA PROJEKTA: {project.Name} ---");
+            List<Task> taskList = projects[project];
+            if (!taskList.Any())
+            {
+                Console.WriteLine("Projekt nema zadataka za upravljanje.");
+                return;
+            }
+            Console.WriteLine("Odaberite broj zadatka kojim zelite upravljati:");
+            for (int i = 0; i < taskList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1} - {taskList[i].Name}");
+            }
+            int selectedTaskIndex;
+            while (!int.TryParse(Console.ReadLine(), out selectedTaskIndex) || selectedTaskIndex < 1 || selectedTaskIndex > taskList.Count)
+            {
+                Console.WriteLine("Nevazeci odabir. Pokusajte ponovno:");
+            }
+            Task selectedTask = taskList[selectedTaskIndex - 1];
+
+            Dictionary<string, Action> taskMenu = new Dictionary<string, Action>
+            {
+                { "1", () => ViewTaskDetails(selectedTask) },
+                { "2", () => EditTaskStatus(selectedTask) }
+            };
+            while (true)
+            {
+                Console.WriteLine($"\n--- ZADATAK: {selectedTask.Name} ---");
+                Console.WriteLine("1 - Prikaz detalja zadatka");
+                Console.WriteLine("2 - Uređivanje statusa zadatka");
+                Console.WriteLine("3 - Povratak na prethodni izbornik");
+                Console.Write("Odaberite opciju:");
+                string choice = Console.ReadLine();
+
+                if (choice == "3")
+                    break;
+                else if (TaskMenu.ContainsKey(choice))
+                    TaskMenu[choice].Invoke();
+                else Console.WriteLine("Nevazeca opcija. Pokusajte ponovno.");
+            }
+        }
+
+        static void ViewTaskDetails(Task task)
+        {
+            Console.WriteLine($"\n--- DETALJI ZADATKA: {task.Name} ---");
+            Console.WriteLine($"Opis: {task.Description}");
+            Console.WriteLine($"Rok zavrsetka: {task.DueDate:yyyy-MM-dd}");
+            Console.WriteLine($"Ocekivano trajanje: {task.ExpectedDuration} dana");
+            Console.WriteLine($"Status: {task.Status}");
+            Console.WriteLine("----------------------------------");
+        }
+
+        static void EditTaskStatus(Task task)
+        {
+            Console.WriteLine($"\nTrenutni status zadatka: {task.Status}");
+            Console.WriteLine("Unesite novi status (Active, Completed, Delayed):");
+            string newStatusInput = Console.ReadLine();
+            if (Enum.TaskStatus.TryParse(newStatusInput, true, out TaskStatus newStatus))
+            {
+                if (task.Status == TaskStatus.Completed)
+                    Console.WriteLine("Status zavrsenog zadatka nije moguce mijenjati.");
+                else
+                {
+                    task.SetStatus(newStatus);
+                    Console.WriteLine($"Status zadatka '{task.Name}' uspjesno promijenjen u '{newStatus}'.");
+                }
+            }
+            else Console.WriteLine("Nevazeci status. Pokusajte ponovno.");
         }
 
         static void Exit()
