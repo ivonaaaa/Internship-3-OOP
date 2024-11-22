@@ -11,7 +11,7 @@ namespace Internship_3_OOP
 {
     public class Program
     {
-        private static Dictionary<Project, List<Task>> projects = new Dictionary<Project, List<Task>>();
+        static Dictionary<Project, List<Task>> projects = new Dictionary<Project, List<Task>>();
         static Dictionary<string, Action> MainMenu = new Dictionary<string, Action>();
         static Dictionary<string, Action> ProjectMenu = new Dictionary<string, Action>();
 
@@ -69,24 +69,90 @@ namespace Internship_3_OOP
             }
         }
 
-        static void AddProject()
+        public static void AddProject()
         {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Unesite ime projekta:");
+                    string name;
+                    while (true)
+                    {
+                        name = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(name))
+                            break;
+
+                        Console.WriteLine("Ime projekta ne moze biti prazno. Pokusajte ponovno:");
+                    }
+
+                    Console.WriteLine("Unesite opis projekta:");
+                    string description;
+                    while (true)
+                    {
+                        description = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(description))
+                            break;
+
+                        Console.WriteLine("Opis projekta ne moze biti prazan. Pokusajte ponovno:");
+                    }
+
+                    Console.WriteLine("Unesite datum pocetka projekta (yyyy-MM-dd):");
+                    DateTime startDate;
+                    while (true)
+                    {
+                        if (DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate))
+                            break;
+
+                        Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd:");
+                    }
+
+                    Console.WriteLine("Unesite datum zavrsetka projekta (yyyy-MM-dd):");
+                    DateTime endDate;
+                    while (true)
+                    {
+                        if (DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate))
+                        {
+                            if (startDate < endDate)
+                                break;
+
+                            Console.WriteLine("Datum pocetka mora biti prije datuma zavrsetka. Unesite ponovo datum zavrsetka:");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd:");
+                        }
+                    }
+
+                    Console.WriteLine("Unesite status projekta (Active, Pending, Completed):");
+                    ProjectStatus status;
+                    while (true)
+                    {
+                        if (Enum.ProjectStatus.TryParse(Console.ReadLine(), true, out status))
+                            break;
+
+                        Console.WriteLine("Nevazeci status. Unesite Active, Pending ili Completed:");
+                    }
+
+
+                    var newProject = new Project(name, description, startDate, endDate, status);
+                    projects.Add(newProject, new List<Task>());
+
+                    Console.WriteLine("Projekt uspjesno dodan! Pritisni bilo koju tipku za nastavak...");
+                    Console.ReadKey();
+                    break;
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Greska: {ex.Message}");
+                    Console.WriteLine("Molimo pokusajte ponovno.\n");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Pogresan format datuma. Molimo unesite datum u formatu yyyy-MM-dd.");
+                }
+            }
             Console.Clear();
-            Console.WriteLine("Unesite ime projekta:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Unesite opis projekta:");
-            string description = Console.ReadLine();
-            Console.WriteLine("Unesite datum pocetka projekta (yyyy-MM-dd):");
-            DateTime startDate = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", null);
-            Console.WriteLine("Unesite datum zavrsetka projekta (yyyy-MM-dd):");
-            DateTime endDate = DateTime.ParseExact(Console.ReadLine(), "yyyy-MM-dd", null);
-            Console.WriteLine("Unesite status projekta (Active, Pending, Completed):");
-            ProjectStatus status = (ProjectStatus)Enum.ProjectStatus.Parse(typeof(ProjectStatus), Console.ReadLine());
-
-            var newProject = new Project(name, description, startDate, endDate, status);
-            projects.Add(newProject, new List<Task>());
-
-            Console.WriteLine("Projekt dodan uspjesno!");
         }
 
         static void DeleteProject()
