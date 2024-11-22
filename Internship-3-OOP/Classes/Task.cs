@@ -12,8 +12,8 @@ namespace Internship_3_OOP.Classes
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
-        public Enum.TaskStatus Status { get; set; }
         public int ExpectedDuration { get; set; }
+        public Enum.TaskStatus Status { get; set; }
 
         public Task(string name, string description, DateTime dueDate, Enum.TaskStatus status, int expectedDuration)
         {

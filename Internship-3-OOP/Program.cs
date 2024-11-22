@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml.Linq;
 
@@ -42,8 +43,8 @@ namespace Internship_3_OOP
                 Console.WriteLine("6 - Upravljanje pojedinim projektom");
                 Console.WriteLine("7 - Izlaz");
                 Console.WriteLine("\nOdaberite opciju:");
-                string choice = Console.ReadLine();
 
+                string choice = Console.ReadLine();
                 if (MainMenu.ContainsKey(choice))
                 {
                     MainMenu[choice].Invoke();
@@ -61,6 +62,11 @@ namespace Internship_3_OOP
         {
             Console.Clear();
             Console.WriteLine("\n--- SVI PROJEKTI S PRIPADAJUCIM ZADACIMA ---");
+            if (projects.Count == 0)
+            {
+                Console.WriteLine("Nema projekata u sustavu.");
+                return;
+            }
             foreach (var project in projects)
             {
                 Console.WriteLine($"Projekt: {project.Key.Name} - Status: {project.Key.Status}");
@@ -73,6 +79,7 @@ namespace Internship_3_OOP
 
         public static void AddProject()
         {
+            Console.Clear();
             while (true)
             {
                 try
@@ -82,10 +89,17 @@ namespace Internship_3_OOP
                     while (true)
                     {
                         name = Console.ReadLine();
-                        if (!string.IsNullOrWhiteSpace(name))
-                            break;
-
-                        Console.WriteLine("Ime projekta ne moze biti prazno. Pokusajte ponovno:");
+                        if (string.IsNullOrWhiteSpace(name))
+                        {
+                            Console.WriteLine("Ime projekta ne moze biti prazno. Pokusajte ponovno:");
+                            continue;
+                        }
+                        if (projects.Keys.Any(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            Console.WriteLine("To ime je zauzeto. Pokusajte ponovno:");
+                            continue;
+                        }
+                        break;
                     }
 
                     Console.WriteLine("Unesite opis projekta:");
@@ -187,6 +201,7 @@ namespace Internship_3_OOP
             {
                 Console.WriteLine("Projekt nije pronaden.");
             }
+            Console.Clear();
         }
 
         static void ViewTasksDueNext7Days()
@@ -195,6 +210,7 @@ namespace Internship_3_OOP
             Console.WriteLine("\n--- ZADACI S ROKOM U SLJEDECIH 7 DANA ---");
             var today = DateTime.Today;
             var sevenDaysLater = today.AddDays(7);
+            bool tasksFound = false;
             foreach (var project in projects)
             {
                 foreach (var task in project.Value)
@@ -202,9 +218,11 @@ namespace Internship_3_OOP
                     if (task.DueDate >= today && task.DueDate <= sevenDaysLater)
                     {
                         Console.WriteLine($"Zadatak: {task.Name} - Rok: {task.DueDate.ToShortDateString()} - Projekt: {project.Key.Name}");
+                        tasksFound = true;
                     }
                 }
             }
+            if (!tasksFound) Console.WriteLine("Nema zadataka s rokom u sljedećih 7 dana.");
         }
 
         static void ViewProjectsByStatus()
@@ -293,80 +311,129 @@ namespace Internship_3_OOP
 
         static void ViewTasks(Project project)
         {
+            Console.Clear();
             Console.WriteLine($"\n--- ZADACI ZA PROJEKT: {project.Name} ---");
-            foreach (var task in projects[project])
-                Console.WriteLine($"Task: {task.Name} - Status: {task.Status} - Due: {task.DueDate.ToShortDateString()}");
+            if (!projects[project].Any())
+            {
+                Console.WriteLine("Nema zadataka za ovaj projekt.");
+            }
+            else
+            {
+                foreach (var task in projects[project])
+                    Console.WriteLine($"Task: {task.Name} - Status: {task.Status} - Due: {task.DueDate.ToShortDateString()}");
+            }
         }
 
         static void ViewProjectDetails(Project project)
         {
+            Console.Clear();
             Console.WriteLine($"\n--- DETALJI PROJEKTA: {project.Name} ---");
             Console.WriteLine($"Opis: {project.Description}");
             Console.WriteLine($"Pocetak: {project.StartDate.ToShortDateString()}");
             Console.WriteLine($"Zavrsetak: {project.EndDate.ToShortDateString()}");
             Console.WriteLine($"Status: {project.Status}");
+            Console.WriteLine("\nPritisni bilo koju tipku za nastavak...");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         static void EditProjectStatus(Project project)
         {
-            Console.WriteLine("\nUnesite novi status projekta (Active, Pending, Completed):");
+            Console.Clear();
+            Console.WriteLine($"Trenutni status projekta: {project.Status}");
+            if (project.Status == ProjectStatus.Completed)
+            {
+                Console.WriteLine("Promjena zavrsenog projekta nije moguca.");
+                return;
+            }
+            Console.WriteLine("Unesite novi status projekta (Active, Pending, Completed):");
             string statusInput = Console.ReadLine();
             if (Enum.ProjectStatus.TryParse(statusInput, true, out ProjectStatus newStatus))
             {
                 project.Status = newStatus;
                 Console.WriteLine($"Status projekta '{project.Name}' uspjesno promijenjen u: {newStatus}");
             }
-            else
-                Console.WriteLine("Nevazeci status. Pokusajte ponovno.");
+            else Console.WriteLine("Nevazeci status. Pokusajte ponovno.");
         }
 
         static void AddTaskToProject(Project project)
         {
-            Console.WriteLine("\nUnesite ime zadatka:");
-            string taskName;
+            Console.Clear();
             while (true)
             {
-                taskName = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(taskName))
+                try
+                {
+                    Console.WriteLine("Unesite ime zadatka:");
+                    string name;
+                    while (true)
+                    {
+                        name = Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(name))
+                        {
+                            Console.WriteLine("Ime zadatka ne moze biti prazno. Pokusajte ponovno:");
+                            continue;
+                        }
+                        if (projects.Values.SelectMany(taskList => taskList).Any(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            Console.WriteLine("To ime je zauzeto. Pokusajte ponovno:");
+                            continue;
+                        }
+                        break;
+                    }
+
+                    Console.WriteLine("Unesite opis zadatka:");
+                    string description;
+                    while (true)
+                    {
+                        description = Console.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(description))
+                            break;
+
+                        Console.WriteLine("Opis zadatka ne moze biti prazan. Pokusajte ponovno:");
+                    }
+
+                    Console.WriteLine("Unesite datum roka zadatka (yyyy-MM-dd):");
+                    DateTime dueDate;
+                    while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out dueDate))
+                        Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd.");
+
+                    Console.WriteLine("Unesite ocekivano trajanje zadatka (u danima):");
+                    int expectedDays;
+                    while (!int.TryParse(Console.ReadLine(), out expectedDays) || expectedDays < 1)
+                        Console.WriteLine("Nevazeci unos. Pokusajte ponovno.");
+
+                    TaskStatus taskStatus;
+                    while (true)
+                    {
+                        Console.WriteLine("Unesite status zadatka (Active, Completed, Delayed):");
+                        string taskStatusInput = Console.ReadLine();
+                        if (Enum.TaskStatus.TryParse(taskStatusInput, true, out taskStatus))
+                            break;
+                        else Console.WriteLine("Nevazeci status. Pokusajte ponovno.");
+                    }
+
+                    Task newTask = new Task(name, description, dueDate, taskStatus, expectedDays);
+                    projects[project].Add(newTask);
+                    Console.WriteLine("Zadatak uspjesno dodan! Pritisnite bilo koju tipku za nastavak...");
+                    Console.ReadKey();
                     break;
-
-                Console.WriteLine("Ime projekta ne moze biti prazno. Pokusajte ponovno:");
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine($"Greska: {ex.Message}");
+                    Console.WriteLine("Molimo pokusajte ponovno.\n");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Pogresan format datuma. Molimo unesite datum u formatu yyyy-MM-dd.");
+                }
             }
-            Console.WriteLine("\nUnesite opis zadatka:");
-            string taskDescription;
-            while (true)
-            {
-                taskDescription = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(taskDescription))
-                    break;
-
-                Console.WriteLine("Ime projekta ne moze biti prazno. Pokusajte ponovno:");
-            }
-            Console.WriteLine("Unesite datum roka zadatka (yyyy-MM-dd):");
-            DateTime dueDate;
-            while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out dueDate))
-                Console.WriteLine("Neispravan format datuma. Molimo unesite datum u formatu yyyy-MM-dd.");
-            Console.WriteLine("Unesite ocekivano trajanje zadatka (u danima):");
-            int expectedDays;
-            while (!int.TryParse(Console.ReadLine(), out expectedDays) || expectedDays < 1)
-                Console.WriteLine("Nevazeci unos. Pokusajte ponovno.");
-            Console.WriteLine("Unesite status zadatka (Active, Completed, Delayed):");
-            string taskStatusInput = Console.ReadLine();
-            TaskStatus taskStatus;
-
-            if (Enum.TaskStatus.TryParse(taskStatusInput, true, out taskStatus))
-            {
-                Task newTask = new Task(taskName, taskDescription, dueDate, taskStatus, expectedDays);
-                projects[project].Add(newTask);
-                Console.WriteLine($"Zadatak '{taskName}' uspjesno dodan u projekt '{project.Name}'.");
-                Console.ReadKey();
-            }
-            else Console.WriteLine("Nevazeci status zadatka. Pokusajte ponovno.");
             Console.Clear();
         }
 
         static void RemoveTaskFromProject(Project project)
         {
+            Console.Clear();
             Console.WriteLine("\nUnesite ime zadatka kojeg zelite izbrisati:");
             string taskName = Console.ReadLine();
             var taskToRemove = projects[project].FirstOrDefault(t => t.Name.Equals(taskName, StringComparison.OrdinalIgnoreCase));
@@ -381,6 +448,7 @@ namespace Internship_3_OOP
 
         static void CalculateTotalTimeForActiveTasks(Project project)
         {
+            Console.Clear();
             TimeSpan totalTime = TimeSpan.Zero;
             foreach (var task in projects[project])
             {
@@ -394,6 +462,7 @@ namespace Internship_3_OOP
 
         static void ManageTask(Project project)
         {
+            Console.Clear();
             Console.WriteLine($"\n--- UPRAVLJANJE ZADACIMA PROJEKTA: {project.Name} ---");
             List<Task> taskList = projects[project];
             if (!taskList.Any())
@@ -413,7 +482,7 @@ namespace Internship_3_OOP
             }
             Task selectedTask = taskList[selectedTaskIndex - 1];
 
-            Dictionary<string, Action> taskMenu = new Dictionary<string, Action>
+            TaskMenu = new Dictionary<string, Action>
             {
                 { "1", () => ViewTaskDetails(selectedTask) },
                 { "2", () => EditTaskStatus(selectedTask) }
@@ -437,28 +506,31 @@ namespace Internship_3_OOP
 
         static void ViewTaskDetails(Task task)
         {
+            Console.Clear();
             Console.WriteLine($"\n--- DETALJI ZADATKA: {task.Name} ---");
             Console.WriteLine($"Opis: {task.Description}");
             Console.WriteLine($"Rok zavrsetka: {task.DueDate:yyyy-MM-dd}");
             Console.WriteLine($"Ocekivano trajanje: {task.ExpectedDuration} dana");
             Console.WriteLine($"Status: {task.Status}");
-            Console.WriteLine("----------------------------------");
+            Console.WriteLine("\nPritisnite bilo koju tipku za nastavak...");
+            Console.Clear();
         }
 
         static void EditTaskStatus(Task task)
         {
-            Console.WriteLine($"\nTrenutni status zadatka: {task.Status}");
-            Console.WriteLine("Unesite novi status (Active, Completed, Delayed):");
-            string newStatusInput = Console.ReadLine();
-            if (Enum.TaskStatus.TryParse(newStatusInput, true, out TaskStatus newStatus))
+            Console.Clear();
+            Console.WriteLine($"Trenutni status zadatka: {task.Status}");
+            if (task.Status == TaskStatus.Completed)
             {
-                if (task.Status == TaskStatus.Completed)
-                    Console.WriteLine("Status zavrsenog zadatka nije moguce mijenjati.");
-                else
-                {
-                    task.SetStatus(newStatus);
-                    Console.WriteLine($"Status zadatka '{task.Name}' uspjesno promijenjen u '{newStatus}'.");
-                }
+                Console.WriteLine("Promjena zavrsenog zadatka nije moguca.");
+                return;
+            }
+            Console.WriteLine("Unesite novi status zadatka (Active, Completed, Delayed):");
+            string statusInput = Console.ReadLine();
+            if (Enum.TaskStatus.TryParse(statusInput, true, out TaskStatus newStatus))
+            {
+                task.Status = newStatus;
+                Console.WriteLine($"Status projekta '{task.Name}' uspjesno promijenjen u: {newStatus}");
             }
             else Console.WriteLine("Nevazeci status. Pokusajte ponovno.");
         }
