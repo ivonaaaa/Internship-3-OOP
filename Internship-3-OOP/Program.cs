@@ -20,7 +20,7 @@ namespace Internship_3_OOP
 
         static void Main(string[] args)
         {
-            //InitalizeData();
+            InitializeData();
 
             MainMenu = new Dictionary<string, Action>
             {
@@ -66,7 +66,7 @@ namespace Internship_3_OOP
             {
                 Console.WriteLine($"Projekt: {project.Key.Name} - Status: {project.Key.Status}");
                 foreach (var task in project.Value)
-                    Console.WriteLine("$\"\\tZadatak: {task.Name} - Status: {task.Status} - Rok: {task.DueDate.ToShortDateString()}\"");
+                    Console.WriteLine($"\tZadatak: {task.Name} - Status: {task.Status} - Rok: {task.DueDate.ToShortDateString()}");
             }
         }
 
@@ -421,6 +421,19 @@ namespace Internship_3_OOP
         static void RemoveTaskFromProject(Project project)
         {
             Console.Clear();
+            Console.WriteLine("Trenutni zadaci:");
+            var tasks = projects[project];
+            if (tasks.Count > 0)
+            {
+                foreach (var task in tasks)
+                    Console.WriteLine($"\tZadatak: {task.Name} - Status: {task.Status} - Rok: {task.DueDate.ToShortDateString()}");
+            }
+            else
+            {
+                Console.WriteLine("\tNema zadataka za ovaj projekt.");
+                return;
+            }
+
             Console.WriteLine("\nUnesite ime zadatka kojeg zelite izbrisati:");
 
             string taskName = Console.ReadLine();
@@ -504,7 +517,6 @@ namespace Internship_3_OOP
             Console.WriteLine($"Ocekivano trajanje: {task.ExpectedDuration} dana");
             Console.WriteLine($"Status: {task.Status}");
             Console.WriteLine("\nPritisnite bilo koju tipku za nastavak...");
-            Console.Clear();
         }
 
         static void EditTaskStatus(Task task)
@@ -533,9 +545,42 @@ namespace Internship_3_OOP
             Environment.Exit(0);
         }
 
-        //u nastavku dodati inicijalne podatke...
+        //inicijalni podaci
+        static void InitializeData()
+        {
+            DateTime startDate1 = DateTime.ParseExact("2020-06-01", "yyyy-MM-dd", null);
+            DateTime startDate2 = DateTime.ParseExact("2023-02-18", "yyyy-MM-dd", null);
+            DateTime startDate3 = DateTime.ParseExact("2024-11-25", "yyyy-MM-dd", null);
+            DateTime startDate4 = DateTime.ParseExact("2022-04-13", "yyyy-MM-dd", null);
 
+            DateTime endDate1 = DateTime.ParseExact("2021-01-01", "yyyy-MM-dd", null);
+            DateTime endDate2 = DateTime.ParseExact("2023-05-16", "yyyy-MM-dd", null);
+            DateTime endDate3 = DateTime.ParseExact("2025-01-06", "yyyy-MM-dd", null);
+            DateTime endDate4 = DateTime.ParseExact("2024-12-07", "yyyy-MM-dd", null);
 
+            Project project1 = new Project("Database", "Baza podataka za zooloski vrt", startDate1, endDate1, ProjectStatus.Completed);
+            Project project2 = new Project("FullStack App", "Aplikacija za kvizove", startDate2, endDate2, ProjectStatus.Completed);
+            Project project3 = new Project("Dump internship", "Edukacijski program", startDate3, endDate3, ProjectStatus.Active);
+            Project project4 = new Project("Game App", "Prototip igre Super Mario", startDate4, endDate4, ProjectStatus.Pending);
 
-    }//class Program
+            project1.AddTask(new Task("Zadatak 1", "Izrada osnovne strukture baze podataka i povezivanje tablica", startDate1.AddDays(20), TaskStatus.Completed, 15));
+            project1.AddTask(new Task("Zadatak 2", "Implementacija naprednih funkcionalnosti za pretragu podataka", startDate1.AddDays(50), TaskStatus.Completed, 20));
+            project1.AddTask(new Task("Zadatak 3", "Testiranje i optimizacija performansi baze podataka", startDate1.AddDays(60), TaskStatus.Delayed, 7));
+
+            project2.AddTask(new Task("Zadatak 1", "Razvoj korisničkog sučelja aplikacije za kvizove", startDate2.AddDays(10), TaskStatus.Completed, 9));
+            project2.AddTask(new Task("Zadatak 2", "Implementacija backend sustava za pohranu rezultata korisnika", startDate2.AddDays(20), TaskStatus.Completed, 20));
+
+            project3.AddTask(new Task("Zadatak 1", "Odradivanje backend lekcija", startDate3.AddDays(2), TaskStatus.Active, 2));
+            project3.AddTask(new Task("Zadatak 2", "Odradivanje frontend lekcija", startDate3.AddDays(140), TaskStatus.Delayed, 132));
+
+            project4.AddTask(new Task("Zadatak 1", "Razvoj osnovne igre s kontrolama i jednostavnim sučeljem", startDate4.AddDays(180), TaskStatus.Completed, 179));
+            project4.AddTask(new Task("Zadatak 2", "Dodavanje novih likova i razina u igri", startDate4.AddDays(365), TaskStatus.Delayed, 270));
+            project4.AddTask(new Task("Zadatak 3", "Testiranje igre i ispravljanje bugova prije lansiranja", startDate4.AddDays(600), TaskStatus.Active, 567));
+
+            projects.Add(project1, new List<Task> { project1.Tasks[0], project1.Tasks[1], project1.Tasks[2] });
+            projects.Add(project2, new List<Task> { project2.Tasks[0], project2.Tasks[1] });
+            projects.Add(project3, new List<Task> { project3.Tasks[0], project3.Tasks[1] });
+            projects.Add(project4, new List<Task> { project4.Tasks[0], project4.Tasks[1], project4.Tasks[2] });
+        }
+    }
 }

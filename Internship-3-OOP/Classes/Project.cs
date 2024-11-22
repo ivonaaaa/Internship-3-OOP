@@ -37,5 +37,10 @@ namespace Internship_3_OOP.Classes
                 Console.WriteLine("Nije moguće promijeniti status završenog projekta.");
             }
         }
+
+        public void AddTask(Task task)
+        {
+            Tasks.Add(task);
+        }
     }
 }
