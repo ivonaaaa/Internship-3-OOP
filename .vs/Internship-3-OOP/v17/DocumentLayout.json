@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|c:\\users\\ivona\\onedrive\\desktop\\dump\\3-tjedan\\internship-3-oop\\internship-3-oop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\enum\\projectstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\enum\\projectstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\enum\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\enum\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\classes\\project.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\classes\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\classes\\task.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|c:\\users\\ivona\\onedrive\\desktop\\dump\\3-tjedan\\internship-3-oop\\internship-3-oop\\enum\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\enum\\taskstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\internship-3-oop\\enum\\projectstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{17135804-5830-491C-A43A-3E7E345B26D0}|Internship-3-OOP\\Internship-3-OOP.csproj|solutionrelative:internship-3-oop\\enum\\projectstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,11 +30,38 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "Project.cs",
+              "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Classes\\Project.cs",
+              "RelativeDocumentMoniker": "Internship-3-OOP\\Classes\\Project.cs",
+              "ToolTip": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Classes\\Project.cs",
+              "RelativeToolTip": "Internship-3-OOP\\Classes\\Project.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T22:11:04.983Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Program.cs",
+              "RelativeDocumentMoniker": "Internship-3-OOP\\Program.cs",
+              "ToolTip": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Program.cs",
+              "RelativeToolTip": "Internship-3-OOP\\Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACUAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-21T19:05:28.504Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "TaskStatus.cs",
               "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Enum\\TaskStatus.cs",
               "RelativeDocumentMoniker": "Internship-3-OOP\\Enum\\TaskStatus.cs",
@@ -47,7 +74,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "ProjectStatus.cs",
               "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Enum\\ProjectStatus.cs",
               "RelativeDocumentMoniker": "Internship-3-OOP\\Enum\\ProjectStatus.cs",
@@ -55,37 +82,12 @@
               "RelativeToolTip": "Internship-3-OOP\\Enum\\ProjectStatus.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T22:37:04.465Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Program.cs",
-              "RelativeDocumentMoniker": "Internship-3-OOP\\Program.cs",
-              "ToolTip": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Program.cs",
-              "RelativeToolTip": "Internship-3-OOP\\Program.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAuwBkAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T19:05:28.504Z",
+              "WhenOpened": "2024-11-21T22:37:04.465Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Project.cs",
-              "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Classes\\Project.cs",
-              "RelativeDocumentMoniker": "Internship-3-OOP\\Classes\\Project.cs",
-              "ToolTip": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Classes\\Project.cs",
-              "RelativeToolTip": "Internship-3-OOP\\Classes\\Project.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACQAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T22:11:04.983Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Task.cs",
               "DocumentMoniker": "C:\\Users\\ivona\\OneDrive\\Desktop\\DUMP\\3-tjedan\\Internship-3-OOP\\Internship-3-OOP\\Classes\\Task.cs",
               "RelativeDocumentMoniker": "Internship-3-OOP\\Classes\\Task.cs",
@@ -93,8 +95,7 @@
               "RelativeToolTip": "Internship-3-OOP\\Classes\\Task.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-21T22:11:22.097Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-21T22:11:22.097Z"
             }
           ]
         }
