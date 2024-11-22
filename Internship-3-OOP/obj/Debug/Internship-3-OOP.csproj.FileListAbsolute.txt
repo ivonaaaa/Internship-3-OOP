@@ -1,0 +1,7 @@
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\obj\Debug\Internship-3-OOP.csproj.AssemblyReference.cache
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\obj\Debug\Internship-3-OOP.csproj.CoreCompileInputs.cache
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\bin\Debug\Internship-3-OOP.exe.config
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\bin\Debug\Internship-3-OOP.exe
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\bin\Debug\Internship-3-OOP.pdb
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\obj\Debug\Internship-3-OOP.exe
+C:\Users\ivona\OneDrive\Desktop\DUMP\3-tjedan\Internship-3-OOP\Internship-3-OOP\obj\Debug\Internship-3-OOP.pdb

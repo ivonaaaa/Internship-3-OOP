@@ -12,16 +12,50 @@ namespace Internship_3_OOP.Classes
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime EndDate { get; set; }
         public ProjectStatus Status { get; set; }
         public List<Task> Tasks { get; set; }
 
         public Project(string name, string description, DateTime startDate, DateTime endDate, ProjectStatus status)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Ime projekta ne može biti prazno.");
+                return;
+            }
+            if (name.All(char.IsDigit))
+            {
+                Console.WriteLine("Krivi tip podatka pri unosu.");
+                return;
+            }
             this.Name = name;
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                Console.WriteLine("Opis projekta ne može biti prazan.");
+                return;
+            }
+            if (description.All(char.IsDigit))
+            {
+                Console.WriteLine("Krivi tip podatka pri unosu.");
+                return;
+            }
             this.Description = description;
+
+            if (StartDate > EndDate)
+            {
+                Console.WriteLine("Datum početka ne može biti nakon datuma završetka.");
+                return;
+            }
             this.StartDate = startDate;
+
+            if (EndDate > StartDate)
+            {
+                Console.WriteLine("Datum završetka ne može biti prije datuma početka.");
+                return;
+            }
             this.EndDate = endDate;
+
             this.Status = status;
             this.Tasks = new List<Task>();
         }
